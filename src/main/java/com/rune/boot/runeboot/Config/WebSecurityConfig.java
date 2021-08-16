@@ -13,9 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequiredArgsConstructor
 @EnableWebSecurity // 1
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final UserService userService;
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
+    private final UserService userService; // 3
 
     @Override
     public void configure(WebSecurity web) { // 4
@@ -23,8 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests() // 6
+    protected void configure(HttpSecurity http) throws Exception { // 5
+        http
+                .authorizeRequests() // 6
                 .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
                 .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
                 .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
@@ -47,5 +47,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // loadUserByUsername() 구현해야함 (서비스 참고)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
-
 }
