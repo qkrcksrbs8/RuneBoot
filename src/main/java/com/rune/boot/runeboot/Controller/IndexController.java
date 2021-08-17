@@ -13,10 +13,12 @@ public class IndexController {
     public String index(Model model, Principal principal) {
         if (principal == null) {
             model.addAttribute("message", "Hello Spring Security");
-            return "redirect:/login";
+            return "login";
+        } else {
+            model.addAttribute("message", "Hello" + principal.getName());
+            return "index";
         }
-        model.addAttribute("message", "Hello" + principal.getName());
-        return "index";
+
     }
 
     @GetMapping("/info")
