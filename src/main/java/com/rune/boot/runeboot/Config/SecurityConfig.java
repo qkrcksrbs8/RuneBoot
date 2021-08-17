@@ -1,6 +1,5 @@
 package com.rune.boot.runeboot.Config;
 
-import com.rune.boot.runeboot.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
 
     @Override
     public void configure(WebSecurity web) { // 4
@@ -38,14 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
                 .invalidateHttpSession(true) // 세션 날리기
         ;
-    }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception { // 9
-        auth.userDetailsService(userService)
-                // 해당 서비스(userService)에서는 UserDetailsService를 implements해서
-                // loadUserByUsername() 구현해야함 (서비스 참고)
-                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
 }

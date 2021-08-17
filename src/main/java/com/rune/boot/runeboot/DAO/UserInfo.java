@@ -1,4 +1,4 @@
-package com.rune.boot.runeboot.Controller;
+package com.rune.boot.runeboot.DAO;
 
 import lombok.AccessLevel;
 import lombok.Builder;
